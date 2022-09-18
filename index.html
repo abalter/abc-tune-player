@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Edit ABC</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name=viewport content="width=device-width, initial-scale=1">
+
+  <meta name="author" content="archive@lpnz.org">
+  <meta name="description" content="Irish trad tune archive">
+  <meta name="keywords" content="irish, traditional, music, jigs, reels, polkas, craic, Wellington">
+
+  <link rel="canonical" href="/editABC/">
+  <link href="/favicon.ico" rel="icon">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+  <link href="/css/style.css" media="screen" rel="stylesheet" type="text/css">
+
+  <script defer src="/js/audioplayer.js"></script>
+  <script defer src="/js/abcjs-basic-min.js"></script>
+  <script src="/js/wssTools.js"></script>
+
+<body>
+  <main class="wrap">
+    <div class="row">
+
+      <article class="post-content">
+        <header class="page-header">
+          <h1 class="page-title">Edit ABC</h1>
+        </header>
+        <p>Use this sample as a template to edit or create your own ABC files.
+          A brief set of instructions is found <a href="/editingABC/">here.</a> If you’d like more information on the
+          ABC format
+          check out the
+          <a href="http://abcnotation.com/wiki/abc:standard:v2.2">ABC Notation</a>
+          guide.
+        </p>
+
+        <p>You can also use the editABC Web App at <a href="https://editabc.session.nz">editabc.session.nz</a></p>
+
+        <div class="row">
+          <!-- Draw the dots -->
+          <div id="abcPaper" class="abcPaper"></div>
+          <div id="abcAudio"></div>
+        </div>
+        <!-- Group the input and controls for ABC-->
+        <div class="row">
+          <h3>Load an ABC file:</h3>
+          <input type="file" id="files" class="filterButton" name="files[]" accept="text/vnd.abc,.abc" />
+          <output id="fileInfo"></output>
+          <p />
+        </div>
+        <div class="row">
+          <h3>Or edit this sample ABC:</h3>
+          <!-- Read the modified ABC and play if requested -->
+          <textarea name="abc" id="textAreaABC" class="abcText" rows="13" spellcheck="false">
+X: 1
+T: Kilglass Lakes
+R: jig
+C: John McEvoy
+S: John McEvoy @ Ceol Aneas 2016
+M: 6/8
+L: 1/8
+K: Dmaj
+|:DED DFA|BAF d2e|faf ede|fdB AFE|
+DED DFA|BAF d2e|faf ede|1 fdd d3 :|2 fdd d2 e ||
+|:faa fbb|afe ~f3|faf dBA| (3Bcd B AFE|
+DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
+    </textarea>
+        </div>
+
+        <!-- Show ABC errors -->
+        <div class="showTextInfo"><strong>ABC Status: </strong><span id="abcWarnings"></span></div>
+
+        <div class="row">
+          <!-- Allow the user to save their ABC-->
+          <h3>Don’t forget to ‘Download ABC’ to save your work:</h3>
+          <span title="Download the ABC you've entered. Don't lose your work!">
+            <button class="filterButton"
+              onclick="downloadABCFile(document.getElementById(&quot;textAreaABC&quot;).value)">Download
+              ABC</button>
+          </span>
+        </div>
+
+        <script>
+
+
+          document.addEventListener("DOMContentLoaded", function (event) {
+            // Check for the various File API support.
+            var fileInfo = document.getElementById('fileInfo');
+            if (
+              window.File
+              && window.FileReader
+              && window.FileList
+              && window.Blob
+            ) {
+              document
+                .getElementById('files')
+                .addEventListener('change', wssTools.handleABCFileSelect, false);
+            } else {
+              fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
+            }
+            audioPlayer.displayABC(textAreaABC.value);
+          });
+
+        </script>
+
+
+      </article>
+
+    </div>
+
+  </main>
+</body>
+
+</html>
